@@ -135,6 +135,7 @@ sub_sipp_design <-
 	)
 
 svygini( ~ v4720 , sub_sipp_design , na.rm = TRUE )
+library(dbplyr)
 library(srvyr)
 sipp_srvyr_design <- as_survey( sipp_design )
 sipp_srvyr_design %>%
