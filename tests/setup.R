@@ -135,6 +135,14 @@ sub_sipp_design <-
 	)
 
 svygini( ~ v4720 , sub_sipp_design , na.rm = TRUE )
+library(srvyr)
+sipp_srvyr_design <- as_survey( sipp_design )
+sipp_srvyr_design %>%
+	summarize( mean = survey_mean( v4720 , na.rm = TRUE ) )
+
+sipp_srvyr_design %>%
+	group_by( region ) %>%
+	summarize( mean = survey_mean( v4720 , na.rm = TRUE ) )
 svytotal( ~one , sipp_design )
 svytotal( ~factor( v0302 ) , sipp_design )
 cv( svytotal( ~factor( v0302 ) , sipp_design ) )
