@@ -19,9 +19,7 @@ main_csv <- unzip( main_tf , exdir = tempdir() )
 sipp_main_dt <- 
 	fread( 
 		main_csv , 
-		sep = "|" , 
-		select = 
-		c( 'SSUID','PNUM','MONTHCODE','SPANEL','SWAVE','WPFINWGT')
+		sep = "|"
 	)
 
 sipp_main_df <- data.frame( sipp_main_dt )
@@ -57,7 +55,7 @@ sipp_df <-
 		by = c( 'ssuid' , 'pnum' , 'monthcode' , 'spanel' , 'swave' )
 	)
 	
-stopifnot( nrow( sipp_df ) == sum( sipp_main_df[ , 'monthcode' ] %in% 12 ) )
+stopifnot( nrow( sipp_df ) == sum( sipp_rw_df[ , 'monthcode' ] %in% 12 ) )
 
 sipp_df[ , 'one' ] <- 1
 # sipp_fn <- file.path( path.expand( "~" ) , "SIPP" , "this_file.rds" )
