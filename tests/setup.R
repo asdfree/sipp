@@ -16,11 +16,7 @@ GET( main_url , write_disk( main_tf ) , progress() )
 
 main_csv <- unzip( main_tf , exdir = tempdir() )
 
-sipp_main_dt <- 
-	fread( 
-		main_csv , 
-		sep = "|"
-	)
+sipp_main_dt <- fread( main_csv , sep = "|" )
 
 sipp_main_df <- data.frame( sipp_main_dt )
 
@@ -38,11 +34,7 @@ GET( rw_url , write_disk( rw_tf ) , progress() )
 
 rw_csv <- unzip( rw_tf , exdir = tempdir() )
 
-sipp_rw_dt <- 
-	fread( 
-		rw_csv , 
-		sep = "|"
-	)
+sipp_rw_dt <- fread( rw_csv , sep = "|" )
 
 sipp_rw_df <- data.frame( sipp_rw_dt )
 
@@ -158,6 +150,8 @@ glm_result <-
 	)
 
 summary( glm_result )
+# table 4 and table 4a
+svymean( ~ factor( findInterval( thnetworth , c( 1 , 5000 , 10000 , 25000 , 50000 , 100000 , 250000 , 500000 ) ) ) , subset( sipp_design , erelrpe %in% 1:2 & tlivqtr %in% 1:2 ))
 
 library(convey)
 sipp_design <- convey_prep( sipp_design )
