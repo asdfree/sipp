@@ -19,7 +19,7 @@ GET( main_url , write_disk( main_tf ) , progress() )
 
 main_csv <- unzip( main_tf , exdir = tempdir() )
 
-sipp_main_dt <- fread( main_csv , sep = "|" , select = variables_to_keep )
+sipp_main_dt <- fread( main_csv , sep = "|" , select = toupper( variables_to_keep ) )
 
 sipp_main_df <- data.frame( sipp_main_dt )
 
@@ -199,8 +199,36 @@ glm_result <-
 	)
 
 summary( glm_result )
-# table 4 and table 4a
-svymean( ~ factor( findInterval( thnetworth , c( 1 , 5000 , 10000 , 25000 , 50000 , 100000 , 250000 , 500000 ) ) ) , subset( sipp_design , erelrpe %in% 1:2 & tlivqtr %in% 1:2 ))
+sipp_household_design <- subset( sipp_design , erelrpe %in% 1:2 & tlivqtr %in% 1:2 )
+
+stopifnot( round( coef( svytotal( ~ one , sipp_household_design ) ) / 1000 , -2 ) == 132700 )
+sipp_household_design <-
+	update(
+		sipp_household_design ,
+		thnetworth_category =
+			factor(
+				findInterval( 
+					thnetworth , 
+					c( 1 , 5000 , 10000 , 25000 , 50000 , 100000 , 250000 , 500000 ) 
+				) ,
+				levels = 0:8 ,
+				labels = c( "Zero or Negative" , "$1 to $4,999" , "$5,000 to $9,999" , 
+				"$10,000 to $24,999" , "$25,000 to $49,999" , "$50,000 to $99,999" , 
+				"$100,000 to $249,999" , "$250,000 to $499,999" , "$500,000 or over" )
+			)
+	)
+
+results <- svymean( ~ thnetworth_category , sipp_household_design )
+
+stopifnot( 
+	all.equal( as.numeric( round( coef( results ) * 100 , 1 ) ) , 
+	c( 11.3 , 6.9 , 3.5 , 5.9 , 6.4 , 8.2 , 15.3 , 13.9 , 28.7 ) ) 
+)
+
+stopifnot(
+	all.equal( as.numeric( round( SE( results ) * 100 , 1 ) ) ,
+	c( 0.3 , 0.2 , 0.2 , 0.2 , 0.2 , 0.2 , 0.3 , 0.3 , 0.3 ) )
+)
 
 library(convey)
 sipp_design <- convey_prep( sipp_design )
