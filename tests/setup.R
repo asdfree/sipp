@@ -187,7 +187,7 @@ svymean( ~ tftotinc , sipp_design , na.rm = TRUE , deff = TRUE )
 # SRS with replacement
 svymean( ~ tftotinc , sipp_design , na.rm = TRUE , deff = "replace" )
 svyciprop( ~ family_below_poverty , sipp_design ,
-	method = "likelihood" )
+	method = "likelihood" , na.rm = TRUE )
 svyttest( tftotinc ~ family_below_poverty , sipp_design )
 svychisq( 
 	~ family_below_poverty + employment_status , 
