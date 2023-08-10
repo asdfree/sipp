@@ -2,8 +2,9 @@
 # poverty oversample
 # monthly dynamics
 variables_to_keep <-
-	c( 'ssuid' , 'pnum' , 'monthcode' , 'spanel' , 'swave' , 'erelrpe' , 'tlivqtr' , 'wpfinwgt' , 
-	'rmesr' , 'thcyincpov' , 'tfcyincpov' , 'tehc_st' , 'rhicovann' , 'rfpov' , 'thnetworth' )
+	c( 'ssuid' , 'pnum' , 'monthcode' , 'spanel' , 'swave' , 'erelrpe' , 
+	'tlivqtr' , 'wpfinwgt' , 'rmesr' , 'thcyincpov' , 'tfcyincpov' ,
+	'tehc_st' , 'rhicovann' , 'rfpov' , 'thnetworth' , 'tftotinc' )
 library(httr)
 library(data.table)
 
