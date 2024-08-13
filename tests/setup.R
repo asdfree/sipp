@@ -13,7 +13,7 @@ main_tf <- tempfile()
 main_url <-
 	paste0(
 		"https://www2.census.gov/programs-surveys/sipp/" ,
-		"data/datasets/2022/pu2022_csv.zip"
+		"data/datasets/2023/pu2023_csv.zip"
 	)
 
 GET( main_url , write_disk( main_tf ) , progress() )
@@ -31,7 +31,7 @@ rw_tf <- tempfile()
 rw_url <-
 	paste0(
 		"https://www2.census.gov/programs-surveys/sipp/" ,
-		"data/datasets/2022/rw2022_csv.zip"
+		"data/datasets/2023/rw2023_csv.zip"
 	)
 
 GET( rw_url , write_disk( rw_tf ) , progress() )
@@ -202,7 +202,7 @@ glm_result <-
 summary( glm_result )
 sipp_household_design <- subset( sipp_design , erelrpe %in% 1:2 & tlivqtr %in% 1:2 )
 
-stopifnot( round( coef( svytotal( ~ one , sipp_household_design ) ) / 1000 , -2 ) == 132700 )
+stopifnot( round( coef( svytotal( ~ one , sipp_household_design ) ) / 1000 , -2 ) == 134100 )
 sipp_household_design <-
 	update(
 		sipp_household_design ,
@@ -223,7 +223,7 @@ results <- svymean( ~ thnetworth_category , sipp_household_design )
 
 stopifnot( 
 	all.equal( as.numeric( round( coef( results ) * 100 , 1 ) ) , 
-	c( 11.3 , 6.9 , 3.5 , 5.9 , 6.4 , 8.2 , 15.3 , 13.9 , 28.7 ) ) 
+	c( 11.1 , 6.8 , 3.5 , 5.7 , 5.6 , 7.8 , 15.9 , 14.4 , 29.2 ) ) 
 )
 
 stopifnot(
