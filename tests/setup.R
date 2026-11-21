@@ -25,7 +25,6 @@ sipp_main_dt <- fread( main_csv , sep = "|" , select = toupper( variables_to_kee
 sipp_main_df <- data.frame( sipp_main_dt )
 
 names( sipp_main_df ) <- tolower( names( sipp_main_df ) )
-
 rw_tf <- tempfile()
 
 rw_url <-
